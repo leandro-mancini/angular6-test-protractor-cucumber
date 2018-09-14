@@ -12,19 +12,25 @@ describe('Eu usuário preciso conseguir efetuar o login no sistema.', () => {
     browser.get('/login');
   });
 
-  it('deve ter títulos corretos e texto do botão', () => {
+  it('deve ter o label ´Nome do usuário´ e ´Senha´ e um botão ´Entrar´', () => {
     expect(page.usernameLabel.getText()).toEqual('Nome do usuário');
     expect(page.passwordLabel.getText()).toEqual('Senha');
     expect(page.signIn.getText()).toEqual('Entrar');
   });
 
-  it ('deve exibir uma mensagem de erro para o usuário se eles fornecerem credenciais incorretas', () => {
+  it('deve exibir uma mensagem de erro para o usuário se ele fornecer campos vazio', () => {
+    page.trySignIn('', '');
+    browser.wait(EC.visibilityOf(page.errorMessage));
+    expect(page.errorMessage.getText()).toEqual('Usuário ou senha incorretos');
+  });
+
+  it ('deve exibir uma mensagem de erro para o usuário se ele fornecer credenciais incorretas como: ´usuario: atecubanos´ e ´senha: 123´', () => {
     page.trySignIn('atecubanos', '123');
     browser.wait(EC.visibilityOf(page.errorMessage));
     expect(page.errorMessage.getText()).toEqual('Usuário ou senha incorretos');
   });
 
-  it ('deve exibir uma mensagem de erro para o usuário se eles fornecerem credenciais incorretas', () => {
+  it ('deve exibir uma mensagem de erro para o usuário se eles fornecerem credenciais incorretas como: ´usuario: admin´ e ´senha: 123´', () => {
     page.trySignIn('admin', '123');
     browser.wait(EC.visibilityOf(page.errorMessage));
     expect(page.errorMessage.getText()).toEqual('Usuário ou senha incorretos');
