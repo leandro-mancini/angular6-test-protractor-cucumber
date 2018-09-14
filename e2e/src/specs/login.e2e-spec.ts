@@ -24,6 +24,12 @@ describe('Eu usuário preciso conseguir efetuar o login no sistema.', () => {
     expect(page.errorMessage.getText()).toEqual('Usuário ou senha incorretos');
   });
 
+  it ('deve exibir uma mensagem de erro para o usuário se eles fornecerem credenciais incorretas', () => {
+    page.trySignIn('admin', '123');
+    browser.wait(EC.visibilityOf(page.errorMessage));
+    expect(page.errorMessage.getText()).toEqual('Usuário ou senha incorretos');
+  });
+
   it ('deve redirecionar o usuário para a página do painel se eles fornecerem credenciais corretas', () => {
     const dashboardPage = new DashboardPage();
     page.trySignIn('test', '123');
