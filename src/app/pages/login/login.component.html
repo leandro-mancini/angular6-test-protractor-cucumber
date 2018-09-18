@@ -14,7 +14,7 @@
       {{error}}
     </div>
 
-    <button class="login__button"
+    <button id="btnLogin" class="login__button"
             [disabled]="loginInProgress"
             (click)="signIn()">
       {{loginInProgress ? 'Verificando..' : 'Entrar'}}
